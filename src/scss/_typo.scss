@@ -12,6 +12,18 @@ p, span, a, h1, h2, h3, h4, h5, h6 {
   color: $darkblue;
 }
 
+h1, h2, h3 {
+  &:not(:first-child) {
+    margin-top: 2em;
+  }
+}
+
+h4, h5, h6 {
+  &:not(:first-child) {
+    margin-top: 1em;
+  }
+}
+
 a {
   transition: color 200ms ease-in-out;
 }

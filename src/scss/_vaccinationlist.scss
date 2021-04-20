@@ -1,0 +1,13 @@
+.vaccinationlist {
+
+  &__item {
+    height: 60px;
+    border-top: 1px solid $lightblue;
+
+    :last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+

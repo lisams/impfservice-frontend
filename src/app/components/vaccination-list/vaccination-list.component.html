@@ -1,0 +1,38 @@
+<main class="container">
+  <div class="w-100">
+    <div class="">
+      <div class="field p-4 p-lg-5 shadow-sm ">
+        <h2 class="fw-bold">Alle Impfungen</h2>
+
+        <div class="vaccinationlist">
+
+
+          <header>
+            <div class="row vaccinationlist__header d-flex align-items-center pb-2 pt-3">
+              <span class="col-4 col-md-2 fs-small">Datum</span>
+              <span class="col-8 col-md-4 fs-small">Ort</span>
+              <span class="d-none d-md-flex col-md-2 fs-small">Von</span>
+              <span class="d-none d-md-flex col-md-2 fs-small">Bis</span>
+              <div class="d-none">
+              </div>
+            </div>
+          </header>
+          <a *ngFor="let vaccination of vaccinations" class="vs-vaccination-list-item"
+             [routerLink]="vaccination.id">
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <span class="col-4 col-md-2 fw-bold">{{vaccination.date | date :'dd.MM.yyyy'}}</span>
+              <span class="col-8 col-md-4">{{vaccination.location.title}}</span>
+              <span class="d-none d-md-flex col-md-2">{{vaccination.start}}</span>
+              <span class="d-none d-md-flex col-md-2">{{vaccination.end}}</span>
+              <div class="d-none">
+                <span>{{vaccination.end}}</span>
+              </div>
+            </div>
+
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>

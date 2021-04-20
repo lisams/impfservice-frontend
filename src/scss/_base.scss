@@ -1,6 +1,14 @@
 body {
   margin: 0 auto;
   background-color: $lightblue;
+
+  @media (min-width: 992px) {
+    overflow: hidden;
+  }
+}
+
+body, * {
+  box-sizing: border-box;
 }
 
 .link {

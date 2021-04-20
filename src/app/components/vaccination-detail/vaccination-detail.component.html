@@ -1,0 +1,93 @@
+<main class="container">
+  <div class="row w-100">
+    <div class="col-12 col-lg-8">
+      <div class="field p-4 p-lg-5 shadow-sm ">
+        <header class="d-flex justify-content-between">
+          <h2 class="fw-bold">Impfung: {{vaccination.location.title}}</h2>
+          <button>Anmelden</button>
+        </header>
+
+        <div class="row">
+          <div class="col-12 col-md-6 pt-3">
+            <span class="fw-bold">Zeitpunkt:</span><br>
+            <span>Datum: {{vaccination.date | date : 'dd.MM.yyyy'}}</span><br>
+            <span>Von: {{vaccination.start}}</span><br>
+            <span>Bis: {{vaccination.end}}</span>
+          </div>
+          <div class="col-12 col-md-6 pt-3">
+            <span class="fw-bold">Ort:</span><br>
+            <span>{{vaccination.location.title}}</span><br>
+            <span *ngIf="vaccination.location.description">{{vaccination.location?.description}}<br></span>
+            <span>{{vaccination.location.address.street_address}}</span><br>
+            <span>{{vaccination.location.address.zip_code}} {{vaccination.location.address.city}}</span><br>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <h3 class="fw-bold">Angemeldete Personen</h3>
+          <p *ngIf="vaccination.users.length === 0" class="py-2">Noch keine Anmeldungen verfügbar</p>
+
+          <ul class="list-unstyled vaccinationlist" *ngIf="vaccination.users.length != 0">
+            <li *ngFor="let user of vaccination.users"
+                class="vaccinationlist__item row d-flex justify-content-between align-items-center">
+              <span class="col-lg-5 fw-bold">
+                <span class="">
+                  <i class="fas fa-check me-2 vaccinated__icon vaccinated__icon--true" *ngIf="user.vaccinated"></i>
+                  <i class="fas fa-times me-2 vaccinated__icon vaccinated__icon--false" *ngIf="!user.vaccinated"></i>
+                </span>
+                {{user.firstname}} {{user.lastname}} (SVNR: {{user.sv_nr}})</span>
+              <span *ngIf="user.phone" class="col-lg-4">Kontakt: <a href="tel:{{user.phone}}">{{user.phone}}</a></span>
+              <div class="col-lg-3">
+                <a [routerLink]="['../../user', user?.sv_nr]" class="m-2 fw-bold"><i class="fas fa-edit pe-2"></i>Status bearbeiten</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="my-5 d-flex align-items-center justify-content-between">
+          <h3 class="fw-bold mb-0">Bearbeitungsoptionen</h3>
+          <div>
+            <button class="button--secondary button--small"><i class="fas fa-edit pe-2"></i>Bearbeiten</button>
+            <button class="button--secondary button--small"><i class="fas fa-trash-alt pe-2"></i>Löschen</button>
+          </div>
+        </div>
+
+        <button class="d-block mt-4" routerLink="/impfungen">Zurück zur Übersicht</button>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="field p-4 p-lg-5 shadow-sm ">
+        <h2 class="fw-bold">Weiterführende Infos</h2>
+        <p>
+          Hier finden Sie eine Sammlung aller Informationen zur Corona-Schutzimpfung
+        </p>
+
+        <h4 class="fw-bold">Vorbeugende Tipps</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
+          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
+          voluptates!</p>
+
+        <h4 class="fw-bold">Die Impfstoffe</h4>
+        <p>Serferendis provident quod ut veniam voluptate voluptates!</p>
+
+        <h5 class="fw-bold">AstraZeneca</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
+          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
+          voluptates!</p>
+
+        <h5 class="fw-bold">Biontech/Pfizer</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At beatae blanditiis dolores error et ex
+          exercitationem illum iure minus molestias nam nesciunt non officiis, placeat praesentium repellendus sequi
+          sint voluptatum.
+        </p>
+
+        <h5 class="fw-bold">Sputnik V</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
+          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
+          voluptates!</p>
+
+        <button class="button--secondary">Mehr Infos</button>
+      </div>
+    </div>
+  </div>
+</main>

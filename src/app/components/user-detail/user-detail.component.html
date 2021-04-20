@@ -1,0 +1,16 @@
+<main class="container">
+  <div class="row w-100">
+    <div class="col-12 col-lg-4">
+      <div class="field p-4 p-lg-5 shadow-sm">
+        <h1 class="fw-bold">{{user.firstname}} {{user.lastname}}</h1>
+        <p>SVNR: {{user.sv_nr}}</p>
+        <button *ngIf="user.vaccination_id" [routerLink]="['../../impfungen', user.vaccination_id]">Details zur Impfung</button>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8">
+      <div class="field p-4 p-lg-5 shadow-sm ">
+        <h2 class="fw-bold">Informationen zu deinem Profil</h2>
+      </div>
+    </div>
+  </div>
+</main>

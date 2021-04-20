@@ -2,15 +2,17 @@
   <div class="container h-100">
     <div class="d-flex justify-content-between align-items-center h-100">
       <div class="header__logo">
+        <a routerLink="/">
         <span class="d-block tc-darkblue fw-bold fs-small">Werde zum Lebensretter:</span>
         <span class="tc-red fw-bold">Lass dich impfen</span>
-
+        </a>
       </div>
       <div>
         <ul class="list-unstyled d-flex mb-0 header__nav">
-          <li class="pe-5 link"><a><i class="far fa-calendar-alt pe-2"></i><span class="fw-bold d-none d-md-inline">Impfungen</span></a>
+          <li class="pe-4 pe-md-5 link"><a routerLink="impfungen" routerLinkActive="active">
+            <i class="far fa-calendar-alt pe-2"></i><span class="fw-bold d-none d-md-inline">Impfungen</span></a>
           </li>
-          <li class="pe-5 link"><a><i class="fas fa-cogs pe-2"></i><span
+          <li class="pe-4 pe-md-5 link"><a><i class="fas fa-cogs pe-2"></i><span
             class="fw-bold d-none d-md-inline">Admin-Panel</span></a></li>
           <li class="link"><a><i class="fas fa-user pe-2"></i><span class="fw-bold d-none d-md-inline">Profil</span></a>
           </li>

@@ -1,0 +1,31 @@
+button, .button {
+  background-color: $red;
+  padding: 8px 16px;
+  color: white;
+  margin: 0 10px 0px 0;
+  font-weight: 700;
+  border: 2px solid $red;
+  outline: none;
+  transition: all 200ms ease-in-out;
+  opacity: 1;
+
+  &--secondary {
+    background: white;
+    color: $red;
+  }
+
+  &:hover, &:focus {
+    opacity: 0.8;
+    transition: all 200ms ease-in-out;
+  }
+
+  &--noborder {
+  border: none;
+}
+
+  &--small {
+    padding: 5px 10px;
+  }
+}
+
+
