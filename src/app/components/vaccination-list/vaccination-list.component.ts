@@ -15,10 +15,10 @@ export class VaccinationListComponent implements OnInit {
 
   ngOnInit(): void {
     // asynchron
-    this.vs.getAll()
+    this.vs.getAllVaccinations()
       .subscribe(res => this.vaccinations = res);
     console.log('observer registered');
-    this.vs.getSingle(3).subscribe(res => console.log(typeof res.start));
+    this.vs.getVaccinationByID(3).subscribe(res => console.log(typeof res.start));
   }
 
 }

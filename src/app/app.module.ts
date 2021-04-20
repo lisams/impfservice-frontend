@@ -9,6 +9,8 @@ import { VaccinationListComponent } from './components/vaccination-list/vaccinat
 import { AppRoutingModule } from './app-routing.module';
 import { VaccinationDetailComponent } from './components/vaccination-detail/vaccination-detail.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { VaccinationFormComponent } from './components/vaccination-form/vaccination-form.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     HomeComponent,
     VaccinationListComponent,
     VaccinationDetailComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    VaccinationFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

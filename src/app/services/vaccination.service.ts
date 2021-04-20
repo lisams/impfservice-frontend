@@ -17,13 +17,18 @@ export class VaccinationService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<Array<Vaccination>> {
+  getAllVaccinations(): Observable<Array<Vaccination>> {
     return this.http.get(`${this.api}/vaccinations`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getSingle(id: number): Observable<Vaccination> {
+  getVaccinationByID(id: number): Observable<Vaccination> {
     return this.http.get(`${this.api}/vaccination/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  removeVaccinationByID(id: number) : Observable<any> {
+    return this.http.delete(`${this.api}/vaccination/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 

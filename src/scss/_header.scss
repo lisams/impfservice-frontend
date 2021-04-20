@@ -8,6 +8,17 @@
   &__logo {
     cursor: pointer;
 
+    // disable hover styles for logo
+    a:hover, a:focus {
+      span.tc-darkblue {
+        color: $darkblue !important;
+      }
+
+      span.tc-red {
+        color: $red !important;
+      }
+    }
+
     span {
       line-height: 12px;
       -webkit-touch-callout: none; /* iOS Safari */

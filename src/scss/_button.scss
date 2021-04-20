@@ -9,9 +9,27 @@ button, .button {
   transition: all 200ms ease-in-out;
   opacity: 1;
 
+  &.disabled {
+    background-color: $lightgray;
+    border: 2px solid $lightgray;
+    cursor: default;
+
+    &:hover, &:focus {
+      opacity: 1;
+    }
+  }
+
   &--secondary {
-    background: white;
+    background: white !important;
     color: $red;
+
+    &.disabled {
+      color: $lightgray;
+
+      &:hover, &:focus {
+        opacity: 1;
+      }
+    }
   }
 
   &:hover, &:focus {
@@ -20,8 +38,8 @@ button, .button {
   }
 
   &--noborder {
-  border: none;
-}
+    border: none;
+  }
 
   &--small {
     padding: 5px 10px;
