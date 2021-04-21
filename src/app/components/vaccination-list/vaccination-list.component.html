@@ -1,8 +1,11 @@
 <main class="container">
   <div class="w-100">
     <div class="">
-      <div class="field p-4 p-lg-5 shadow-sm ">
-        <h2 class="fw-bold">Alle Impfungen</h2>
+      <div class="field p-4 p-lg-5 shadow-sm">
+        <div class="d-flex justify-content-between">
+          <h1 class="fw-bold">Alle Impfungen</h1>
+          <button [routerLink]="['../admin']">Impfung hinzufügen</button>
+        </div>
 
         <div *ngIf="vaccinations.length === 0" class="py-2">
           <p>Keine Impfungen verfügbar</p>

@@ -29,7 +29,6 @@ export class VaccinationDetailComponent implements OnInit {
     if (confirm(`Möchten Sie die Impfung in ${this.vaccination.location.title} (ID: ${this.vaccination.id}) wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!`)) {
       this.vs.removeVaccinationByID(this.vaccination.id)
         .subscribe(res => this.router.navigate(['../'], { relativeTo: this.route }));
-
     }
   }
 }

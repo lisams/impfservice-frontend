@@ -8,6 +8,7 @@ export class User {
     public firstname: string,
     public lastname: string,
     public gender: string,
+    public date_of_birth: string,
     public email: string,
     public email_verified_at: string | null,
     public phone: string,

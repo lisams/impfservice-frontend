@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { VaccinationDetailComponent } from './components/vaccination-detail/vaccination-detail.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { VaccinationFormComponent } from './components/vaccination-form/vaccination-form.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,12 +22,13 @@ import {FormsModule} from '@angular/forms';
     UserDetailComponent,
     VaccinationFormComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

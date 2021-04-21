@@ -18,7 +18,6 @@ export class VaccinationListComponent implements OnInit {
     this.vs.getAllVaccinations()
       .subscribe(res => this.vaccinations = res);
     console.log('observer registered');
-    this.vs.getVaccinationByID(3).subscribe(res => console.log(typeof res.start));
   }
 
 }

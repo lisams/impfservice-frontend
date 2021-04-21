@@ -8,6 +8,7 @@ button, .button {
   outline: none;
   transition: all 200ms ease-in-out;
   opacity: 1;
+  max-height: 42px;
 
   &.disabled {
     background-color: $lightgray;
