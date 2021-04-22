@@ -31,7 +31,7 @@ export class VaccinationFactory {
       rawVaccination.date,
       rawVaccination.start,
       rawVaccination.end,
-      0,
+      rawVaccination.max_participants,
       null,
       new Location(
         null,

@@ -19,7 +19,7 @@
 
             <div class="input-field">
               <input formControlName="date" type="date" placeholder="TT.MM.JJJJ">
-              <label>Datum</label>
+              <label>Datum<span class="tc-red"> *</span></label>
             </div>
 
             <div class="row">
@@ -27,14 +27,14 @@
                 <div class="input-field">
 
                   <input type="time" formControlName="start" placeholder="HH:MM">
-                  <label>Startzeit</label>
+                  <label>Startzeit<span class="tc-red"> *</span></label>
                 </div>
               </div>
 
               <div class="col-12 col-lg-6">
                 <div class="input-field">
                   <input formControlName="end" type="time" placeholder="HH:MM">
-                  <label>Endzeit</label>
+                  <label>Endzeit<span class="tc-red"> *</span></label>
                 </div>
               </div>
             </div>
@@ -47,26 +47,26 @@
 
               <div class="input-field">
                 <input formControlName="title">
-                <label>Name der Location</label>
+                <label>Name der Location<span class="tc-red"> *</span></label>
               </div>
               <address [formGroup]="address" class="mb-0">
                 <div class="input-field">
                   <input formControlName="street_address">
-                  <label>Straße & Hausnummer</label>
+                  <label>Straße & Hausnummer<span class="tc-red"> *</span></label>
                 </div>
 
                 <div class="row">
                   <div class="col-12 col-lg-6">
                     <div class="input-field">
                       <input formControlName="zip_code" maxlength="4">
-                      <label>PLZ</label>
+                      <label>PLZ<span class="tc-red"> *</span></label>
                     </div>
                   </div>
 
                   <div class="col-12 col-lg-6">
                     <div class="input-field">
                       <input formControlName="city">
-                      <label>Ort/Stadt</label>
+                      <label>Ort/Stadt<span class="tc-red"> *</span></label>
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
 
             <div class="input-field">
               <input formControlName="max_participants" type="number" maxlength="3">
-              <label>Anzahl Teilnehmer:innen</label>
+              <label>Anzahl Teilnehmer:innen<span class="tc-red"> *</span></label>
             </div>
           </div>
 

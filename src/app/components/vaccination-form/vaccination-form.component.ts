@@ -39,7 +39,7 @@ export class VaccinationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['isbn'];
+    const id = this.route.snapshot.params['id'];
     if (id) {
       this.isUpdatingVaccination = true;
       this.vs.getVaccinationByID(id).subscribe(vacc => {
@@ -86,19 +86,19 @@ export class VaccinationFormComponent implements OnInit {
 
   submitForm() {
     const vaccination: Vaccination = VaccinationFactory.fromObject(this.vaccinationForm.value);
-
+    console.log('OIDA: ' + vaccination.max_participants);
     vaccination.location = this.location.value;
     vaccination.location.address = this.address.value;
 
     if (this.isUpdatingVaccination) {
-      /* this.vs.update(vaccination).subscribe(res => {
-           this.router.navigate(["../../books", vaccination.isbn], {
-             relativeTo: this.route
-           });
-         },
-         err => {
-           console.log("Fehler ist passiert", err)
-         });*/
+      this.vs.updateVaccinationByID(vaccination).subscribe(() => {
+          this.router.navigate(['../../impfungen', vaccination.id], {
+            relativeTo: this.route
+          });
+        },
+        err => {
+          console.log('Fehler ist passiert', err);
+        });
 
     } else {
 
@@ -108,7 +108,7 @@ export class VaccinationFormComponent implements OnInit {
           this.vaccination = VaccinationFactory.empty();
           this.vaccinationForm.reset(VaccinationFactory.empty());
 
-          this.router.navigate(["../impfungen"], {
+          this.router.navigate(['../impfungen'], {
             relativeTo: this.route
           });
 

@@ -12,13 +12,23 @@ import {catchError, retry} from 'rxjs/operators';
 })
 export class VaccinationService {
 
-  private api = 'http://impfservice.s1810456032.student.kwmhgb.at/api';
+  private api = 'https://impfservice.s1810456032.student.kwmhgb.at/api';
 
   constructor(private http: HttpClient) {
   }
 
   getAllVaccinations(): Observable<Array<Vaccination>> {
     return this.http.get(`${this.api}/vaccinations`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getAllUpcomingVaccinations(): Observable<Array<Vaccination>> {
+    return this.http.get(`${this.api}/vaccinations/upcoming`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getAllUpcomingVaccinationsWithOpenSlots(): Observable<Array<Vaccination>> {
+    return this.http.get(`${this.api}/vaccinations/openslots`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -34,6 +44,11 @@ export class VaccinationService {
 
   createVaccination(vaccination: Vaccination) : Observable<any> {
     return this.http.post(`${this.api}/vaccination`, vaccination)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  updateVaccinationByID(vaccination: Vaccination) : Observable<any> {
+    return this.http.put(`${this.api}/vaccination/${vaccination.id}`, vaccination)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
