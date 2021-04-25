@@ -1,6 +1,4 @@
 export class ErrorMessage {
-
-
   constructor (
     public forControl: string,
     public forValidator: string,
@@ -12,7 +10,7 @@ export class ErrorMessage {
     if(navigator.userAgent.toLowerCase().indexOf('safari/') > -1) {
       return "Das Datum muss im Format JJJJ-MM-TT eingegeben werden";
     }
-    return "Das Datum muss im Format TT.MM.TTTT eingegeben werden"
+    return "Das Datum muss im Format TT.MM.JJJJ eingegeben werden"
   }
 }
 

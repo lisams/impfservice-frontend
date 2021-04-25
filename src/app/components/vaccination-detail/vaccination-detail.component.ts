@@ -27,9 +27,9 @@ export class VaccinationDetailComponent implements OnInit {
       .subscribe(vacc => {
         this.vaccination = vacc;
         this.vaccinationCompleted = new Date(vacc.date) > new Date();
-        console.log(new Date(this.vaccination.date));
-        console.log(new Date());
-        console.log(this.vaccinationCompleted);
+        //console.log(new Date(this.vaccination.date));
+        //console.log(new Date());
+        // console.log(this.vaccinationCompleted);
       });
     console.log('observer registered');
   }

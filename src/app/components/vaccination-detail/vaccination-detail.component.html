@@ -13,9 +13,9 @@
             <span class="fw-bold">Zeitpunkt:</span><br>
             <span>Datum: {{vaccination.date | date : 'dd.MM.yyyy'}}</span><br>
             <span
-              *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}}</span><br>
+              *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}} Uhr</span><br>
             <span
-              *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}}</span>
+              *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}} Uhr</span>
           </div>
           <div class="col-12 col-md-6 pt-3">
             <span class="fw-bold">Ort:</span><br>

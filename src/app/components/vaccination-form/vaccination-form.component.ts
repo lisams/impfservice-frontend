@@ -15,13 +15,14 @@ import {VaccinationFormErrorMessage} from './vaccination-form-error-messages';
 export class VaccinationFormComponent implements OnInit {
 
   vaccinationForm: FormGroup;
-  isUpdatingVaccination = false;
-  vaccination = VaccinationFactory.empty();
   locationForm: FormGroup;
   addressForm: FormGroup;
+
+  isUpdatingVaccination = false;
+  vaccination = VaccinationFactory.empty();
+
   errors: { [key: string]: string } = {};
   datePlaceholder : string = 'TT.MM.JJJJ'
-
 
   constructor(
     private fb: FormBuilder,
@@ -39,12 +40,18 @@ export class VaccinationFormComponent implements OnInit {
       this.isUpdatingVaccination = true;
       this.vs.getVaccinationByID(id).subscribe(vacc => {
         this.vaccination = vacc;
+        this.refactorTimeOfVaccination();
+
         console.log(vacc);
+
         this.initVaccination();
+
       });
     }
     this.initVaccination();
+  }
 
+  private formValidation() {
     this.vaccinationForm.statusChanges.subscribe(() =>
       this.updateErrorMessages()
     );
@@ -60,15 +67,12 @@ export class VaccinationFormComponent implements OnInit {
     this.buildAddressGroup();
     this.buildLocationGroup();
 
-    document.getElementsByTagName('input')[0].placeholder = 'new text for email';
-
-
     this.vaccinationForm = this.fb.group({
       id: this.vaccination.id,
       date: [this.vaccination.date,
         [
           Validators.required,
-          VaccinationValidators.checkDate,
+          // VaccinationValidators.checkDate,
           Validators.pattern('[0-9]+.*[0-9]+.*[0-9]+')
         ]
       ],
@@ -93,6 +97,8 @@ export class VaccinationFormComponent implements OnInit {
       location_id: this.vaccination.location_id,
       location: this.locationForm.value
     });
+
+    this.formValidation();
   }
 
   buildLocationGroup() {
@@ -159,34 +165,26 @@ export class VaccinationFormComponent implements OnInit {
     this.errors = {};
 
     for (const message of VaccinationFormErrorMessage) {
-      const controlVaccination = this.vaccinationForm.get(message.forControl);
-      if (
-        controlVaccination && controlVaccination.dirty && controlVaccination.invalid
-        && controlVaccination.errors[message.forValidator] &&
-        !this.errors[message.forControl]
-      ) {
-        this.errors[message.forControl] = message.text;
-      }
+      // vaccination
+      this.updateErrorMessagesFor(message, this.vaccinationForm);
 
-      const controlLocation = this.locationForm.get(message.forControl);
-      if (
-        controlLocation && controlLocation.dirty && controlLocation.invalid
-        && controlLocation.errors[message.forValidator] &&
-        !this.errors[message.forControl]
-      ) {
-        this.errors[message.forControl] = message.text;
-      }
+      // location
+      this.updateErrorMessagesFor(message, this.locationForm);
 
-      const controlAddress = this.addressForm.get(message.forControl);
-      if (
-        controlAddress && controlAddress.dirty && controlAddress.invalid
-        && controlAddress.errors[message.forValidator] &&
-        !this.errors[message.forControl]
-      ) {
-        this.errors[message.forControl] = message.text;
-      }
+      // address
+      this.updateErrorMessagesFor(message, this.addressForm);
     }
+  }
 
+  private updateErrorMessagesFor(message, form: FormGroup) {
+    const controlAddress = form.get(message.forControl);
+    if (
+      controlAddress && controlAddress.dirty && controlAddress.invalid
+      && controlAddress.errors[message.forValidator] &&
+      !this.errors[message.forControl]
+    ) {
+      this.errors[message.forControl] = message.text;
+    }
   }
 
   safariFormBugfix () {
@@ -194,6 +192,12 @@ export class VaccinationFormComponent implements OnInit {
       this.datePlaceholder = "JJJJ-MM-TT";
     }
   }
+
+  refactorTimeOfVaccination() {
+    this.vaccination.start = String(this.vaccination.start).substring(0, String(this.vaccination.start).length - 3);
+    this.vaccination.end = String(this.vaccination.end).substring(0, String(this.vaccination.end).length - 3);
+  }
+
 
 
 }

@@ -5,8 +5,8 @@ export class Vaccination {
   constructor(
     public id: number,
     public date: Date,
-    public start: Date,
-    public end: Date,
+    public start: string,
+    public end: string,
     public max_participants: number,
     public location_id: number,
     public location: Location,
