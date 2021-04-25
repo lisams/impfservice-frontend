@@ -13,9 +13,11 @@
             <span class="fw-bold">Zeitpunkt:</span><br>
             <span>Datum: {{vaccination.date | date : 'dd.MM.yyyy'}}</span><br>
             <span
-              *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}} Uhr</span><br>
+              *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}}
+              Uhr</span><br>
             <span
-              *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}} Uhr</span>
+              *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}}
+              Uhr</span>
           </div>
           <div class="col-12 col-md-6 pt-3">
             <span class="fw-bold">Ort:</span><br>
@@ -84,13 +86,14 @@
       <div class="field p-4 p-lg-5 shadow-sm ">
         <h2 class="fw-bold">Weiterführende Infos</h2>
         <p>
-          Hier finden Sie eine Sammlung aller Informationen zur Corona-Schutzimpfung
+          Hier finden Sie eine Sammlung aller Informationen zur Corona-Schutzimpfung. Alle häufig gestellten Fragen
+          finden Sie auf der Website des Gesundheitsministeriums.
         </p>
-
-        <h4 class="fw-bold">Vorbeugende Tipps</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
-          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
-          voluptates!</p>
+        <a
+          target="_blank"
+          href="https://www.sozialministerium.at/Corona-Schutzimpfung/Corona-Schutzimpfung---Haeufig-gestellte-Fragen.html">
+          <button class="button--secondary">Zum FAQ</button>
+        </a>
 
         <h4 class="fw-bold">Die Impfstoffe</h4>
         <p>Serferendis provident quod ut veniam voluptate voluptates!</p>

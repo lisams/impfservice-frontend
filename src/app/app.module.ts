@@ -11,6 +11,7 @@ import { VaccinationDetailComponent } from './components/vaccination-detail/vacc
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { VaccinationFormComponent } from './components/vaccination-form/vaccination-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     VaccinationListComponent,
     VaccinationDetailComponent,
     UserDetailComponent,
-    VaccinationFormComponent
+    VaccinationFormComponent,
+    LoginComponent
   ],
     imports: [
         BrowserModule,

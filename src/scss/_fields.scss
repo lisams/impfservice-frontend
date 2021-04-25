@@ -9,6 +9,16 @@ main {
     height: calc(100vh - 70px);
   }
 
+  .w-lg-50 {
+    @media (min-width: 992px) {
+      width: 50vw !important;
+    }
+
+    @media (min-width: 1200px) {
+      width: 35vw !important;
+    }
+  }
+
   .field {
     background: white;
     margin-bottom: 10px;
@@ -17,6 +27,14 @@ main {
       height: 75vh;
       margin-bottom: 40px;
       overflow-y: scroll;
+    }
+
+    &--login {
+      @media (min-width: 992px) {
+        height: auto;
+        margin-bottom: 40px;
+        overflow-y: scroll;
+      }
     }
   }
 }

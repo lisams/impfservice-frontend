@@ -13,8 +13,6 @@
         <form class="mt-3" [formGroup]="vaccinationForm" (ngSubmit)="submitForm()">
 
           <input type="hidden" name="id">
-          <button type="submit" [disabled]="vaccinationForm.invalid || locationForm.invalid || addressForm.invalid">Speichern</button>
-
           <div class="my-4">
             <h4 class="fw-bold mb-3">Zeitpunkt</h4>
 
@@ -98,6 +96,10 @@
               <div *ngIf="errors.max_participants" class="error-message"> {{ errors.max_participants }} </div>
             </div>
           </div>
+
+          <button type="submit" [disabled]="vaccinationForm.invalid || locationForm.invalid || addressForm.invalid">
+            Speichern
+          </button>
 
         </form>
 

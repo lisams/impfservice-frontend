@@ -1,0 +1,35 @@
+<main class="container d-flex flex-column justify-content-center">
+  <h2 class="fw-bold text-center mt-5 mt-lg-0">Werde Lebensretter:in:</h2>
+  <h1 class="fw-bold tc-red mt-0 mb-5 text-center">Lass dich impfen</h1>
+  <div class=" w-100">
+    <div class="d-flex justify-content-center">
+      <div class="w-100 w-lg-50">
+        <div class="col-12 col-lg-12">
+          <div class="field field--login p-4 p-lg-5 shadow-sm">
+            <h3 class="fw-bold">Login</h3>
+            <form class="mt-4" [formGroup]="loginForm">
+              <div class="input-field">
+                <input formControlName="email" type="email" placeholder="mirjam.muster@email.com">
+                <label>Email</label>
+                <div *ngIf="errors.email" class="error-message"> {{ errors.email }} </div>
+              </div>
+              <div class="input-field">
+                <input formControlName="password" type="password" placeholder="*******">
+                <label>Passwort</label>
+                <div *ngIf="errors.password" class="error-message"> {{ errors.password }} </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="lh-1">
+                  <span class="fw-bold small tc-gray">Noch kein Konto? </span><br class="d-md-none">
+                  <a target="#" class="fw-bold small tc-gray">Hier registrieren!</a>
+                </span>
+                <button type="submit" class="me-0" [disabled]="loginForm.invalid">Anmelden</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

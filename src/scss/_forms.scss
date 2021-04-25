@@ -72,15 +72,9 @@ input::placeholder, textarea::placeholder, select::placeholder {
   }
 }
 
-input:invalid, textarea:invalid, select:invalid, input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
-  border-color: $red !important;
-  transition: all 200ms ease-in-out;
-}
-
-/* SAFARI PLACEHOLDER BUGFIX */
-// @media not all and (min-resolution: .001dpcm) {
-  .input-field > input::-webkit-input-placeholder::before {
-    color:#666;
-    content:"Line 1\A Line 2\A Line 3\A";
+input, textarea, select {
+  &:invalid, &.ng-invalid.ng-dirty {
+    border-color: $red !important;
+    transition: all 200ms ease-in-out;
   }
-// }
+}
