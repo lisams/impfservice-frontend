@@ -16,10 +16,10 @@ button, .button {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
 
-  &.disabled {
+  &:disabled {
     background-color: $lightgray;
     border: 2px solid $lightgray;
-    cursor: default;
+    cursor: not-allowed;
 
     &:hover, &:focus {
       opacity: 1;

@@ -18,8 +18,9 @@
             <h4 class="fw-bold mb-3">Zeitpunkt</h4>
 
             <div class="input-field">
-              <input formControlName="date" type="date" placeholder="TT.MM.JJJJ">
+              <input formControlName="date" type="date" id="date" placeholder="{{datePlaceholder}}">
               <label>Datum<span class="tc-red"> *</span></label>
+              <div *ngIf="errors.date" class="error-message"> {{ errors.date }} </div>
             </div>
 
             <div class="row">
@@ -28,6 +29,7 @@
 
                   <input type="time" formControlName="start" placeholder="HH:MM">
                   <label>Startzeit<span class="tc-red"> *</span></label>
+                  <div *ngIf="errors.start" class="error-message"> {{ errors.start }} </div>
                 </div>
               </div>
 
@@ -35,24 +37,27 @@
                 <div class="input-field">
                   <input formControlName="end" type="time" placeholder="HH:MM">
                   <label>Endzeit<span class="tc-red"> *</span></label>
+                  <div *ngIf="errors.end" class="error-message"> {{ errors.end }} </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="my-4">
-            <div [formGroup]="location">
+            <div [formGroup]="locationForm">
               <h4 class="fw-bold mb-3">Ort</h4>
               <input type="hidden" name="id">
 
               <div class="input-field">
                 <input formControlName="title">
                 <label>Name der Location<span class="tc-red"> *</span></label>
+                <div *ngIf="errors.title" class="error-message"> {{ errors.title }} </div>
               </div>
-              <address [formGroup]="address" class="mb-0">
+              <address [formGroup]="addressForm" class="mb-0">
                 <div class="input-field">
                   <input formControlName="street_address">
                   <label>Straße & Hausnummer<span class="tc-red"> *</span></label>
+                  <div *ngIf="errors.street_address" class="error-message"> {{ errors.street_address }} </div>
                 </div>
 
                 <div class="row">
@@ -60,6 +65,7 @@
                     <div class="input-field">
                       <input formControlName="zip_code" maxlength="4">
                       <label>PLZ<span class="tc-red"> *</span></label>
+                      <div *ngIf="errors.zip_code" class="error-message"> {{ errors.zip_code }} </div>
                     </div>
                   </div>
 
@@ -67,6 +73,7 @@
                     <div class="input-field">
                       <input formControlName="city">
                       <label>Ort/Stadt<span class="tc-red"> *</span></label>
+                      <div *ngIf="errors.city" class="error-message"> {{ errors.city }} </div>
                     </div>
                   </div>
                 </div>
@@ -87,6 +94,7 @@
             <div class="input-field">
               <input formControlName="max_participants" type="number" maxlength="3">
               <label>Anzahl Teilnehmer:innen<span class="tc-red"> *</span></label>
+              <div *ngIf="errors.max_participants" class="error-message"> {{ errors.max_participants }} </div>
             </div>
           </div>
 

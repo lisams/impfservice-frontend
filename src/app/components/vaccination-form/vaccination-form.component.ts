@@ -2,18 +2,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import {VaccinationService} from '../../services/vaccination.service';
 import {Vaccination} from '../../shared/vaccination';
-import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormArray, FormGroup, Validators} from '@angular/forms';
 import {VaccinationFactory} from '../../shared/vaccination-factory';
-
-/*
-* import { ActivatedRoute, Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
-import { BookFactory } from '../shared/book-factory';
-import { BookStoreService } from "../shared/book-store.service";
-import { BookFormErrorMessages } from "./book-form-error-messages";
-import { Book, Image } from "../shared/book";
-import { BookValidators} from "../shared/book-validators";
-* */
+import {VaccinationValidators} from '../../shared/vaccination-validators';
+import {VaccinationFormErrorMessage} from './vaccination-form-error-messages';
 
 @Component({
   selector: 'app-vaccination-form',
@@ -24,10 +16,11 @@ export class VaccinationFormComponent implements OnInit {
 
   vaccinationForm: FormGroup;
   isUpdatingVaccination = false;
-  errors: { [key: string]: string } = {};
   vaccination = VaccinationFactory.empty();
-  location: FormGroup;
-  address: FormGroup;
+  locationForm: FormGroup;
+  addressForm: FormGroup;
+  errors: { [key: string]: string } = {};
+  datePlaceholder : string = 'TT.MM.JJJJ'
 
 
   constructor(
@@ -39,6 +32,8 @@ export class VaccinationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.safariFormBugfix();
+
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.isUpdatingVaccination = true;
@@ -49,46 +44,84 @@ export class VaccinationFormComponent implements OnInit {
       });
     }
     this.initVaccination();
+
+    this.vaccinationForm.statusChanges.subscribe(() =>
+      this.updateErrorMessages()
+    );
+    this.locationForm.statusChanges.subscribe(() =>
+      this.updateErrorMessages()
+    );
+    this.addressForm.statusChanges.subscribe(() =>
+      this.updateErrorMessages()
+    );
   }
 
   initVaccination() {
     this.buildAddressGroup();
     this.buildLocationGroup();
 
+    document.getElementsByTagName('input')[0].placeholder = 'new text for email';
+
+
     this.vaccinationForm = this.fb.group({
       id: this.vaccination.id,
-      date: this.vaccination.date,
-      start: this.vaccination.start,
-      end: this.vaccination.end,
-      max_participants: this.vaccination.max_participants,
+      date: [this.vaccination.date,
+        [
+          Validators.required,
+          VaccinationValidators.checkDate,
+          Validators.pattern('[0-9]+.*[0-9]+.*[0-9]+')
+        ]
+      ],
+      start: [this.vaccination.start,
+        [
+          Validators.required,
+          Validators.pattern('[0-2][0-9]:[0-6][0-9]')
+        ]
+      ],
+      end: [this.vaccination.end,
+        [
+          Validators.required,
+          Validators.pattern('[0-2][0-9]:[0-6][0-9]')
+        ]
+      ],
+      max_participants: [this.vaccination.max_participants,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+$')
+        ]
+      ],
       location_id: this.vaccination.location_id,
-      location: this.location.value
+      location: this.locationForm.value
     });
   }
 
   buildLocationGroup() {
-    this.location = this.fb.group({
-      id: new FormControl(this.vaccination.location.id),
-      title: new FormControl(this.vaccination.location.title),
-      description: new FormControl(this.vaccination.location.description),
-      address: this.address
+    this.locationForm = this.fb.group({
+      id: this.vaccination.location.id,
+      title: [this.vaccination.location.title, Validators.required],
+      description: this.vaccination.location.description,
+      address: this.addressForm
     });
   }
 
   buildAddressGroup() {
-    this.address = this.fb.group({
-      id: new FormControl(this.vaccination.location.address.id),
-      street_address: new FormControl(this.vaccination.location.address.street_address),
-      zip_code: new FormControl(this.vaccination.location.address.zip_code),
-      city: new FormControl(this.vaccination.location.address.city)
+    this.addressForm = this.fb.group({
+      id: this.vaccination.location.address.id,
+      street_address: [this.vaccination.location.address.street_address, Validators.required],
+      zip_code: [this.vaccination.location.address.zip_code,
+        [
+          Validators.required,
+          Validators.pattern('[0-9][0-9][0-9][0-9]')
+        ]
+      ],
+      city: [this.vaccination.location.address.city, Validators.required]
     });
   }
 
   submitForm() {
     const vaccination: Vaccination = VaccinationFactory.fromObject(this.vaccinationForm.value);
-    console.log('OIDA: ' + vaccination.max_participants);
-    vaccination.location = this.location.value;
-    vaccination.location.address = this.address.value;
+    vaccination.location = this.locationForm.value;
+    vaccination.location.address = this.addressForm.value;
 
     if (this.isUpdatingVaccination) {
       this.vs.updateVaccinationByID(vaccination).subscribe(() => {
@@ -119,5 +152,48 @@ export class VaccinationFormComponent implements OnInit {
     }
 
   }
+
+  updateErrorMessages() {
+    console.log('form invalid? ' + this.vaccinationForm.invalid);
+
+    this.errors = {};
+
+    for (const message of VaccinationFormErrorMessage) {
+      const controlVaccination = this.vaccinationForm.get(message.forControl);
+      if (
+        controlVaccination && controlVaccination.dirty && controlVaccination.invalid
+        && controlVaccination.errors[message.forValidator] &&
+        !this.errors[message.forControl]
+      ) {
+        this.errors[message.forControl] = message.text;
+      }
+
+      const controlLocation = this.locationForm.get(message.forControl);
+      if (
+        controlLocation && controlLocation.dirty && controlLocation.invalid
+        && controlLocation.errors[message.forValidator] &&
+        !this.errors[message.forControl]
+      ) {
+        this.errors[message.forControl] = message.text;
+      }
+
+      const controlAddress = this.addressForm.get(message.forControl);
+      if (
+        controlAddress && controlAddress.dirty && controlAddress.invalid
+        && controlAddress.errors[message.forValidator] &&
+        !this.errors[message.forControl]
+      ) {
+        this.errors[message.forControl] = message.text;
+      }
+    }
+
+  }
+
+  safariFormBugfix () {
+    if(navigator.userAgent.toLowerCase().indexOf('safari/') > -1) {
+      this.datePlaceholder = "JJJJ-MM-TT";
+    }
+  }
+
 
 }

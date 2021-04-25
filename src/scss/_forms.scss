@@ -7,6 +7,14 @@
     // left: 0.8rem;
     color: $darkblue;
   }
+
+  .error-message {
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-size: 12px;
+    top: -10px;
+    color: $red;
+  }
 }
 
 input, textarea, select {
@@ -63,3 +71,16 @@ input::placeholder, textarea::placeholder, select::placeholder {
     width: 200px;
   }
 }
+
+input:invalid, textarea:invalid, select:invalid, input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
+  border-color: $red !important;
+  transition: all 200ms ease-in-out;
+}
+
+/* SAFARI PLACEHOLDER BUGFIX */
+// @media not all and (min-resolution: .001dpcm) {
+  .input-field > input::-webkit-input-placeholder::before {
+    color:#666;
+    content:"Line 1\A Line 2\A Line 3\A";
+  }
+// }
