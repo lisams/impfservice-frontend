@@ -52,11 +52,6 @@ export class VaccinationService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getUserBySVNR(svnr: string): Observable<User> {
-    return this.http.get(`${this.api}/user/${svnr}`)
-      .pipe(retry(3)).pipe(catchError(this.errorHandler));
-  }
-
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }

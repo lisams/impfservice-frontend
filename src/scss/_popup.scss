@@ -1,0 +1,34 @@
+.popup {
+  background: white;
+  max-height: 75vh;
+  width: 100%;
+  position: relative;
+  @media (min-width: 576px) {
+    width: 500px;
+  }
+
+  @media (min-width: 992px) {
+    width: 600px;
+  }
+
+  &__bg {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000090;
+  }
+
+  &__close {
+    top: 0;
+    right: 0;
+    position: absolute;
+  }
+}
+
+
+.popup--open {
+  overflow: hidden;
+}

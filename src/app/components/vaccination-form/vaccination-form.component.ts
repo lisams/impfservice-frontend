@@ -131,7 +131,7 @@ export class VaccinationFormComponent implements OnInit {
 
     if (this.isUpdatingVaccination) {
       this.vs.updateVaccinationByID(vaccination).subscribe(() => {
-          this.router.navigate(['../../impfungen', vaccination.id], {
+          this.router.navigate(['../../../impfungen', vaccination.id], {
             relativeTo: this.route
           });
         },
@@ -147,7 +147,7 @@ export class VaccinationFormComponent implements OnInit {
           this.vaccination = VaccinationFactory.empty();
           this.vaccinationForm.reset(VaccinationFactory.empty());
 
-          this.router.navigate(['../impfungen'], {
+          this.router.navigate(['../../impfungen'], {
             relativeTo: this.route
           });
 

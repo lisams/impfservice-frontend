@@ -12,6 +12,8 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { VaccinationFormComponent } from './components/vaccination-form/vaccination-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { PopupComponent } from './components/popup/popup.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LoginComponent } from './components/login/login.component';
     VaccinationDetailComponent,
     UserDetailComponent,
     VaccinationFormComponent,
-    LoginComponent
+    LoginComponent,
+    PopupComponent,
+    AdminHomeComponent
   ],
     imports: [
         BrowserModule,

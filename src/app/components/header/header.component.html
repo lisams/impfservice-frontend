@@ -12,10 +12,10 @@
           <li class="pe-4 pe-md-5 link"><a routerLink="impfungen" routerLinkActive="active">
             <i class="far fa-calendar-alt pe-2"></i><span class="fw-bold d-none d-md-inline">Impfungen</span></a>
           </li>
-          <li class="pe-4 pe-md-5 link"><a routerLink="admin" routerLinkActive="active"><i class="fas fa-cogs pe-2"></i><span
+          <li class="pe-4 pe-md-5 link" *ngIf="adminIsLoggedIn()"><a routerLink="admin" routerLinkActive="active"><i class="fas fa-cogs pe-2"></i><span
             class="fw-bold d-none d-md-inline">Admin-Panel</span></a></li>
-          <li class="link"><a routerLink="login" routerLinkActive="active"><i class="fas fa-user pe-2"></i><span class="fw-bold d-none d-md-inline">Login</span></a>
-          <li class="link d-none"><a><i class="fas fa-user pe-2"></i><span class="fw-bold d-none d-md-inline">Profil</span></a>
+          <li class="link" *ngIf="!isLoggedIn()"><a routerLink="login" routerLinkActive="active"><i class="fas fa-user pe-2"></i><span class="fw-bold d-none d-md-inline">Login</span></a>
+          <li class="link" *ngIf="isLoggedIn()"><a [routerLink]="['user', getCurrentUserSVNR()]" routerLinkActive="active"><i class="fas fa-user pe-2"></i><span class="fw-bold d-none d-md-inline">Profil</span></a>
           </li>
         </ul>
       </div>

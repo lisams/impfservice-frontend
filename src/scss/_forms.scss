@@ -17,7 +17,7 @@
   }
 }
 
-input, textarea, select {
+input:not([type="checkbox"]), textarea, select {
   width: 100%;
   background: white;
   color: $darkblue;

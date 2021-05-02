@@ -8,7 +8,7 @@
 
 
             <div class="mb-4 row">
-              <div class="col-12 col-sm-6 col-xl-8 mt-3 mt-lg-0">
+              <div class="col-12 mt-3 mt-lg-0 {{adminIsLoggedIn() ? 'col-sm-6 col-xl-8' : 'col-12'}}">
                 <div class="input-field">
                   <select class="" [(ngModel)]="currentFilter" (change)="filter()">
                     <option *ngFor="let option of filterOptions">{{option}}</option>
@@ -16,7 +16,7 @@
                   <label>Filter</label>
                 </div>
               </div>
-              <div class="col-12 col-sm-6 col-xl-4 mt-sm-3 mt-lg-0">
+              <div class="col-12 col-sm-6 col-xl-4 mt-sm-3 mt-lg-0" *ngIf="adminIsLoggedIn()">
                 <button [routerLink]="['../admin']" class="w-100">Impfung hinzufügen</button>
               </div>
 
@@ -40,7 +40,7 @@
             <div class="row vaccinationlist__item d-flex align-items-center">
               <span class="col-4 col-md-2 fw-bold">{{vaccination.date | date :'dd.MM.yyyy'}}</span>
               <span class="col-8 col-md-5">{{vaccination.location.title}}
-                <small>({{vaccination.location.address.street_address}}, {{vaccination.location.address.zip_code}} {{vaccination.location.address.city}})</small>
+                <small class="d-none d-lg-inline">({{vaccination.location.address.street_address}}, {{vaccination.location.address.zip_code}} {{vaccination.location.address.city}})</small>
               </span>
               <span
                 class="d-none d-md-flex col-md-3">

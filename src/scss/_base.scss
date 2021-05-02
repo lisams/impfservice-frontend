@@ -17,4 +17,15 @@ body, * {
 
 a {
   text-decoration: none;
+  cursor: pointer;
+}
+
+.m-0-auto {
+  margin: 0 auto;
+}
+
+.w-lg-100 {
+  @media (min-width: 992px) {
+    width: 100%;
+  }
 }

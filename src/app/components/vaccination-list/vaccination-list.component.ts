@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {VaccinationService} from '../../services/vaccination.service';
 import {Vaccination} from '../../shared/vaccination';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-vaccination-list',
@@ -12,7 +13,10 @@ export class VaccinationListComponent implements OnInit {
   filterOptions: string[];
   currentFilter = 'Alle Impfungen';
 
-  constructor(private vs: VaccinationService) {
+  constructor(
+    private vs: VaccinationService,
+    private authService: AuthenticationService
+  ) {
   }
 
   ngOnInit(): void {
@@ -43,6 +47,10 @@ export class VaccinationListComponent implements OnInit {
       this.vs.getAllVaccinations()
         .subscribe(res => this.vaccinations = res);
     }
+  }
+
+  adminIsLoggedIn(){
+    return this.authService.adminIsLoggedIn()
   }
 
 }

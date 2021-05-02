@@ -7,7 +7,7 @@
         <div class="col-12 col-lg-12">
           <div class="field field--login p-4 p-lg-5 shadow-sm">
             <h3 class="fw-bold">Login</h3>
-            <form class="mt-4" [formGroup]="loginForm">
+            <form class="mt-4" [formGroup]="loginForm" (ngSubmit)="login()">
               <div class="input-field">
                 <input formControlName="email" type="email" placeholder="mirjam.muster@email.com">
                 <label>Email</label>

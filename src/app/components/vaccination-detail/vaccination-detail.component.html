@@ -2,82 +2,94 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="field p-4 p-lg-5 shadow-sm ">
-        <header class="d-block d-lg-flex justify-content-between">
-          <h2 class="fw-bold">Impfung: {{vaccination.location.title}}</h2>
-          <button *ngIf="vaccinationCompleted && (vaccination.max_participants-vaccination.users.length > 0)">Anmelden
-          </button>
-        </header>
-
-        <div class="row">
-          <div class="col-12 col-md-6 pt-3">
-            <span class="fw-bold">Zeitpunkt:</span><br>
-            <span>Datum: {{vaccination.date | date : 'dd.MM.yyyy'}}</span><br>
-            <span
-              *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}}
-              Uhr</span><br>
-            <span
-              *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}}
-              Uhr</span>
-          </div>
-          <div class="col-12 col-md-6 pt-3">
-            <span class="fw-bold">Ort:</span><br>
-            <span>{{vaccination.location.title}}</span><br>
-            <span>{{vaccination.location.address.street_address}}</span><br>
-            <span>{{vaccination.location.address.zip_code}} {{vaccination.location.address.city}}</span><br>
-          </div>
+        <div *ngIf="!vaccination">
+          <h2 class="fw-bold">Impfung wurde nicht gefunden</h2>
+          <button class="d-block mt-4 mb-5 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
         </div>
+        <div *ngIf="vaccination">
+          <header class="d-block d-lg-flex justify-content-between">
+            <h2 class="fw-bold">Impfung: {{vaccination?.location.title}}</h2>
+            <button *ngIf="!vaccinationCompleted
+            && (vaccination.max_participants-vaccination.users.length > 0)
+            && isLoggedIn()" (click)="openRegisterPopup($event)">Anmelden
+            </button>
+          </header>
 
-        <div *ngIf="vaccination.location.description" class="pt-3">
-          <span class="fw-bold">Beschreibung:</span><br>
-          <span>{{vaccination.location.description}}</span>
-        </div>
+          <div class="row">
+            <div class="col-12 col-md-6 pt-3">
+              <span class="fw-bold">Zeitpunkt:</span><br>
+              <span>Datum: {{vaccination.date | date : 'dd.MM.yyyy'}}</span><br>
+              <span
+                *ngIf="vaccination.start">Von: {{vaccination?.start.toString().substring(0, vaccination.start.toString().length - 3)}}
+                Uhr</span><br>
+              <span
+                *ngIf="vaccination.end">Bis: {{vaccination?.end.toString().substring(0, vaccination.end.toString().length - 3)}}
+                Uhr</span>
+            </div>
+            <div class="col-12 col-md-6 pt-3">
+              <span class="fw-bold">Ort:</span><br>
+              <span>{{vaccination.location.title}}</span><br>
+              <span>{{vaccination.location.address.street_address}}</span><br>
+              <span>{{vaccination.location.address.zip_code}} {{vaccination.location.address.city}}</span><br>
+            </div>
+          </div>
 
-        <div class="pt-3">
-          <span class="fw-bold">Freie Plätze:</span><br>
-          <span *ngIf="vaccination.max_participants-vaccination.users.length > 0"><span
-            *ngIf="vaccination.max_participants-vaccination.users.length <= 5">Nur noch </span><span
-            *ngIf="vaccination.max_participants-vaccination.users.length > 5"></span>
-            {{vaccination.max_participants - vaccination.users.length}} freie Plätze
+          <div *ngIf="vaccination.location.description" class="pt-3">
+            <span class="fw-bold">Beschreibung:</span><br>
+            <span>{{vaccination.location.description}}</span>
+          </div>
+
+          <div class="pt-3" *ngIf="vaccination.max_participants">
+            <span class="fw-bold">Freie Plätze:</span><br>
+            <span *ngIf="vaccination.max_participants-vaccination.users.length > 0"><span
+              *ngIf="vaccination.max_participants-vaccination.users.length <= 5">Nur noch </span><span
+              *ngIf="vaccination.max_participants-vaccination.users.length > 5"></span>
+              {{vaccination.max_participants - vaccination.users.length}} freie Plätze
+              <span> (von  {{vaccination.max_participants}})</span>
           </span>
-          <span *ngIf="vaccination.max_participants-vaccination.users.length == 0">
+            <span *ngIf="vaccination.max_participants-vaccination.users.length == 0">
             <span class="tc-red">Keine freien Plätze verfügbar</span></span>
-        </div>
+          </div>
 
-        <button class="d-block mt-4 mb-5 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
+          <button class="d-block mt-4 mb-5 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
 
+          <!-- NUR FÜR ADMIN -->
+          <div *ngIf="adminIsLoggedIn()">
+            <div class="pt-4">
+              <h3 class="fw-bold">Angemeldete Personen</h3>
+              <p *ngIf="vaccination.users.length === 0" class="py-2">Keine Anmeldungen verfügbar</p>
 
-        <div class="pt-4">
-          <h3 class="fw-bold">Angemeldete Personen</h3>
-          <p *ngIf="vaccination.users.length === 0" class="py-2">Keine Anmeldungen verfügbar</p>
-
-          <ul class="list-unstyled vaccinationlist mb-0" *ngIf="vaccination.users.length != 0">
-            <li *ngFor="let user of vaccination.users"
-                class="vaccinationlist__item row d-flex justify-content-between align-items-center py-3">
+              <ul class="list-unstyled vaccinationlist mb-0" *ngIf="vaccination.users.length != 0">
+                <li *ngFor="let user of vaccination.users"
+                    class="vaccinationlist__item row d-flex justify-content-between align-items-center py-3">
               <span class="col-12 col-lg-6 col-xl-5">
                 <span class="">
                   <i class="fas fa-check me-2 vaccinated__icon vaccinated__icon--true" *ngIf="user.vaccinated"></i>
                   <i class="fas fa-times me-2 vaccinated__icon vaccinated__icon--false" *ngIf="!user.vaccinated"></i>
                 </span>
                 <span class="fw-bold">{{user.firstname}} {{user.lastname}}</span> (SVNR: {{user.sv_nr}})</span>
-              <span *ngIf="user.phone" class="col-12 col-lg-3 col-xl-4 ps-5 ps-lg-0"><span class="d-xl-inline d-none">Kontakt: </span><a
-                href="tel:{{user.phone}}">{{user.phone}}</a></span>
-              <div class="col-12 col-lg-3 ps-5 ps-lg-0">
-                <a [routerLink]="['../../user', user?.sv_nr]" class="fw-bold"><i
-                  class="fas fa-edit pe-2 d-none d-lg-inline"></i>Status bearbeiten</a>
-              </div>
-            </li>
-          </ul>
-        </div>
+                  <span *ngIf="user.phone" class="col-12 col-lg-3 col-xl-4 ps-5 ps-lg-0"><span
+                    class="d-xl-inline d-none">Kontakt: </span><a
+                    href="tel:{{user.phone}}">{{user.phone}}</a></span>
+                  <div class="col-12 col-lg-3 ps-5 ps-lg-0">
+                    <a [routerLink]="['../../user', user?.sv_nr]" class="fw-bold"><i
+                      class="fas fa-edit pe-2 d-none d-lg-inline"></i>Status bearbeiten</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
-        <div class="mt-5 d-block d-lg-flex align-items-center justify-content-between" *ngIf="vaccinationCompleted">
-          <h3 class="fw-bold mb-0">Bearbeitungsoptionen</h3>
-          <div class="mt-3 mt-lg-0">
-            <button class="button--secondary button--small" [routerLink]="['../../admin/', vaccination.id]"><i
-              class="fas fa-edit pe-2"></i>Bearbeiten
-            </button>
-            <button class="button--secondary button--small" (click)="removeVaccination()"><i
-              class="fas fa-trash-alt pe-2"></i>Löschen
-            </button>
+            <div class="mt-5 d-block d-lg-flex align-items-center justify-content-between" *ngIf="!vaccinationCompleted">
+              <h3 class="fw-bold mb-0">Bearbeitungsoptionen</h3>
+              <div class="mt-3 mt-lg-0">
+                <button class="button--secondary button--small" [routerLink]="['../../admin/impfung', vaccination.id]"><i
+                  class="fas fa-edit pe-2"></i>Bearbeiten
+                </button>
+                <button class="button--secondary button--small" (click)="openDeletePopup($event)"><i
+                  class="fas fa-trash-alt pe-2"></i>Löschen
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -95,27 +107,30 @@
           <button class="button--secondary">Zum FAQ</button>
         </a>
 
-        <h4 class="fw-bold">Die Impfstoffe</h4>
-        <p>Serferendis provident quod ut veniam voluptate voluptates!</p>
+        <h4 class="fw-bold pt-4">Die Impfstoffe</h4>
+        <p>2020 und 2021 wurde bereits auf Hochtouren an der Entwicklung von Impfstoffen gearbeitet. Hier sind nochmal
+          die wichtigsten Infos zusammengefasst.</p>
 
         <h5 class="fw-bold">AstraZeneca</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
-          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
-          voluptates!</p>
+        <p>Bei diesem Impfstoff handelt es sich um einen sogenannten Vektorimpfstoff. Das bedeutet, dass es sich beim
+          Impfstoff um eine abgeschwächte Form des Virus handelt. Dadurch, dass der Virus abgeschwächt ist, wirst du
+          dadurch nicht krank, aber dein Immussystem wird angeregt Antikörper dafür zu produzieren, die dich vor einer
+          richtigen Infektion schützen können. Ziemlich cool, oder?</p>
 
         <h5 class="fw-bold">Biontech/Pfizer</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At beatae blanditiis dolores error et ex
-          exercitationem illum iure minus molestias nam nesciunt non officiis, placeat praesentium repellendus sequi
-          sint voluptatum.
+        <p>Bei diesen Impfstoffen werden keine Krankheitserreger oder deren Bestandteile (Antigene) für die
+          Immunisierung benötigt. Durch die Impfung wird den Zellen im Muskelgewebe in Form einer mRNA (messenger-RNA
+          bzw. Boten-RNA) nur die Information für die Herstellung einzelner Antigene übertragen. Ähnlich der Infektion
+          mit einem Virus, beginnt die Zelle nach dem Bauplan der mRNA mit der Produktion von Proteinen, die als
+          Antigene dem Immunsystem präsentiert werden und eine Immunantwort auslösen. Diese Art von Impfstoffe sind noch
+          relativ neu und deshalb so gut, weil sie sehr schnell hergestellt werden können!
         </p>
-
-        <h5 class="fw-bold">Sputnik V</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid assumenda blanditiis consectetur,
-          eius est facilis harum hic illum iste obcaecati optio pariatur, perferendis provident quod ut veniam voluptate
-          voluptates!</p>
 
         <button class="button--secondary">Mehr Infos</button>
       </div>
     </div>
   </div>
 </main>
+
+<app-popup [headline]="deletePopupHeadline" [text]="deletePopupText" [buttontext]="deletePopupButton" [visible]="deletePopupOpen" (popupAnswer)="getDeletePopupAnswer($event)"></app-popup>
+<app-popup [headline]="registerPopupHeadline" [text]="registerPopupText" [buttontext]="registerPopupButton" [visible]="registerPopupOpen" (popupAnswer)="getRegisterPopupAnswer($event)"></app-popup>
