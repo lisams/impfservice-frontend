@@ -1,15 +1,14 @@
-<div class="popup__bg d-flex justify-content-center align-items-center container-fluid {{visible ? 'd-block' : 'd-none'}}">
+<div class="popup__bg d-flex justify-content-center align-items-center container-fluid {{popup.isVisible ? 'd-block' : 'd-none'}}">
   <div class="w-100">
     <div class="p-4 p-md-5 col-12 col-md-7 col-lg-4 shadow-lg popup m-0-auto">
       <div class="">
-        <h2 class="fw-bold mb-4 pe-4">{{headline}}</h2>
-        <p>{{text}}</p>
+        <h2 class="fw-bold mb-4 pe-4">{{popup.headline}}</h2>
+        <p>{{popup.text}}</p>
         <div class="d-flex justify-content-between align-items-center pt-4">
           <a class="fw-bold tc-gray" (click)="abort()">Abbrechen</a>
-          <button class="d-block me-0" (click)="confirm()">{{buttontext}}</button>
+          <button class="d-block me-0" (click)="confirm()">{{popup.buttontext}}</button>
         </div>
         <a class="popup__close position-absolute m-4 px-1" (click)="abort()"><i class="fas fa-times tc-gray"></i></a>
-
       </div>
     </div>
   </div>

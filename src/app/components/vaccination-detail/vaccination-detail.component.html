@@ -4,14 +4,13 @@
       <div class="field p-4 p-lg-5 shadow-sm ">
         <div *ngIf="!vaccination">
           <h2 class="fw-bold">Impfung wurde nicht gefunden</h2>
-          <button class="d-block mt-4 mb-5 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
+          <button class="d-block mt-4 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
         </div>
         <div *ngIf="vaccination">
           <header class="d-block d-lg-flex justify-content-between">
             <h2 class="fw-bold">Impfung: {{vaccination?.location.title}}</h2>
-            <button *ngIf="!vaccinationCompleted
-            && (vaccination.max_participants-vaccination.users.length > 0)
-            && isLoggedIn()" (click)="openRegisterPopup($event)">Anmelden
+            <button *ngIf="!vaccinationCompleted && (vaccination.max_participants-vaccination.users.length > 0)"
+                    (click)="openRegisterPopups($event)">Anmelden
             </button>
           </header>
 
@@ -51,11 +50,11 @@
             <span class="tc-red">Keine freien Plätze verfügbar</span></span>
           </div>
 
-          <button class="d-block mt-4 mb-5 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
+          <button class="d-block mt-4 button--secondary" routerLink="/impfungen">Zurück zur Übersicht</button>
 
           <!-- NUR FÜR ADMIN -->
           <div *ngIf="adminIsLoggedIn()">
-            <div class="pt-4">
+            <div class="pt-4 mt-5">
               <h3 class="fw-bold">Angemeldete Personen</h3>
               <p *ngIf="vaccination.users.length === 0" class="py-2">Keine Anmeldungen verfügbar</p>
 
@@ -79,11 +78,12 @@
               </ul>
             </div>
 
-            <div class="mt-5 d-block d-lg-flex align-items-center justify-content-between" *ngIf="!vaccinationCompleted">
+            <div class="mt-5 d-block d-lg-flex align-items-center justify-content-between"
+                 *ngIf="!vaccinationCompleted">
               <h3 class="fw-bold mb-0">Bearbeitungsoptionen</h3>
               <div class="mt-3 mt-lg-0">
-                <button class="button--secondary button--small" [routerLink]="['../../admin/impfung', vaccination.id]"><i
-                  class="fas fa-edit pe-2"></i>Bearbeiten
+                <button class="button--secondary button--small" [routerLink]="['../../admin/impfung', vaccination.id]">
+                  <i class="fas fa-edit pe-2"></i>Bearbeiten
                 </button>
                 <button class="button--secondary button--small" (click)="openDeletePopup($event)"><i
                   class="fas fa-trash-alt pe-2"></i>Löschen
@@ -132,5 +132,9 @@
   </div>
 </main>
 
-<app-popup [headline]="deletePopupHeadline" [text]="deletePopupText" [buttontext]="deletePopupButton" [visible]="deletePopupOpen" (popupAnswer)="getDeletePopupAnswer($event)"></app-popup>
-<app-popup [headline]="registerPopupHeadline" [text]="registerPopupText" [buttontext]="registerPopupButton" [visible]="registerPopupOpen" (popupAnswer)="getRegisterPopupAnswer($event)"></app-popup>
+<app-confirm-popup [popup]="popupConfirmDeleteVaccination"
+                   (popupAnswer)="getDeletePopupAnswer($event)"></app-confirm-popup>
+<app-confirm-popup [popup]="popupConfirmRegisterUserForVaccination"
+                   (popupAnswer)="getRegisterPopupAnswer($event)"></app-confirm-popup>
+<app-alert-popup [popup]="popupAlertUserNotLoggedIn" [link]="popupAlertUserNotLoggedInLink"
+(popupAnswer)="closeAlertPopup($event)"></app-alert-popup>

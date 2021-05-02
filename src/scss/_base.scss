@@ -24,8 +24,8 @@ a {
   margin: 0 auto;
 }
 
-.w-lg-100 {
+.row {
   @media (min-width: 992px) {
-    width: 100%;
+    width: calc(100% + 1.5rem);
   }
 }

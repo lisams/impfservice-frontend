@@ -6,6 +6,7 @@ import {VaccinationFactory} from '../../shared/vaccination-factory';
 import {AuthenticationService} from '../../services/authentication.service';
 import {User} from '../../shared/user';
 import {UserService} from '../../services/user.service';
+import {Popup} from '../../shared/popup';
 
 @Component({
   selector: 'app-vaccination-detail',
@@ -16,15 +17,24 @@ export class VaccinationDetailComponent implements OnInit {
   vaccination: Vaccination = null;
   vaccinationCompleted = null;
 
-  deletePopupHeadline: string = 'Impfung wirklich löschen?';
-  deletePopupText: string;
-  deletePopupButton: string = 'Löschen';
-  deletePopupOpen: boolean = false;
+  popupConfirmDeleteVaccination: Popup = new Popup(
+    'Impfung wirklich löschen?',
+    'Soll diese Impfung wirklich gelöscht werden?',
+    'Löschen'
+  );
 
-  registerPopupHeadline: string = 'Für diese Impfung anmelden?';
-  registerPopupText: string;
-  registerPopupButton: string = 'Verpflichtend anmelden';
-  registerPopupOpen: boolean = false;
+  popupConfirmRegisterUserForVaccination: Popup = new Popup(
+    'Für diese Impfung anmelden?',
+    'Für diese Impfung wirklich anmelden?',
+    'Verpflichtend anmelden'
+  );
+
+  popupAlertUserNotLoggedIn: Popup = new Popup(
+    'Du bist noch nicht eingeloggt!',
+    'Um dich für eine Impfung anzumelden, musst du dich vorher einloggen. Möchtest du dich einloggen?',
+    'Jetzt anmelden'
+  );
+  popupAlertUserNotLoggedInLink: string = '../../login';
 
   currentUser: User = null;
 
@@ -45,13 +55,12 @@ export class VaccinationDetailComponent implements OnInit {
         console.log(vacc);
         this.vaccination = vacc;
         this.vaccinationCompleted = new Date(vacc.date) < new Date();
-        this.deletePopupText = `Soll diese Impfung in ${this.vaccination.location.title} wirklich gelöscht werden? Dieser Schritt kann nicht mehr rückgängen gemacht werden!`;
-        this.registerPopupText = `Wollen Sie sich für diese Impfung in ${this.vaccination.location.title} wirklich anmelden? Wir möchten Sie an dieser Stelle darauf hinweisen, dass der Impftermin wahrgenommen werden muss!`;
+        this.popupConfirmDeleteVaccination.text = `Soll diese Impfung in ${this.vaccination.location.title} wirklich gelöscht werden? Dieser Schritt kann nicht mehr rückgängen gemacht werden!`;
+        this.popupConfirmRegisterUserForVaccination.text = `Wollen Sie sich für diese Impfung in ${this.vaccination.location.title} wirklich anmelden? Wir möchten Sie an dieser Stelle darauf hinweisen, dass der Impftermin wahrgenommen werden muss!`;
         //console.log(new Date(this.vaccination.date));
         //console.log(new Date());
         // console.log(this.vaccinationCompleted);
       });
-    console.log('observer registered');
   }
 
   removeVaccination(answer) {
@@ -65,28 +74,47 @@ export class VaccinationDetailComponent implements OnInit {
   registerUserForVaccination(answer) {
     if (answer) {
       this.us.registerUserForVaccination(this.currentUser.sv_nr, this.vaccination.id)
-        .subscribe(res => console.log(res));
+        .subscribe(res => {
+          console.log(res);
+          this.router.navigate(['/user', this.currentUser.sv_nr]);
+        });
     }
   }
 
   openDeletePopup(e) {
     e.preventDefault();
-    this.deletePopupOpen = true;
+    this.popupConfirmDeleteVaccination.isVisible = true;
   }
 
-  openRegisterPopup(e) {
+  openRegisterPopups(e) {
+    if (this.isLoggedIn()) {
+      this.openRegisterConfirmPopup(e);
+    } else {
+      this.openRegisterAlertPopup();
+    }
+  }
+
+  openRegisterAlertPopup() {
+    this.popupAlertUserNotLoggedIn.isVisible = true;
+  }
+
+  openRegisterConfirmPopup(e) {
     e.preventDefault();
-    this.registerPopupOpen = true;
+    this.popupConfirmRegisterUserForVaccination.isVisible = true;
   }
 
   getDeletePopupAnswer(answer) {
-    this.deletePopupOpen = false;
+    this.popupConfirmDeleteVaccination.isVisible = false;
     this.removeVaccination(answer);
   }
 
   getRegisterPopupAnswer(answer) {
-    this.registerPopupOpen = false;
+    this.popupConfirmRegisterUserForVaccination.isVisible = false;
     this.registerUserForVaccination(answer);
+  }
+
+  closeAlertPopup(answer) {
+    this.popupAlertUserNotLoggedIn.isVisible = answer;
   }
 
   adminIsLoggedIn() {
