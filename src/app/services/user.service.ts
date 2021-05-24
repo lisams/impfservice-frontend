@@ -35,6 +35,11 @@ export class UserService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  cancelUserForVaccination(svnr: string) {
+    return this.http.put(`${this.api}/user/cancel/${svnr}`, svnr)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }

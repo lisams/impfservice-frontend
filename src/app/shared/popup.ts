@@ -5,11 +5,11 @@ export class Popup {
   isVisible: boolean;
   link: string;
 
-  constructor(headline, text, buttontext) {
+  constructor(headline, text, buttontext, isVisible = false) {
     this.headline = headline;
     this.text = text;
     this.buttontext = buttontext;
-    this.isVisible = false;
+    this.isVisible = isVisible;
     this.link = null;
   }
 }

@@ -15,6 +15,8 @@ import {LoginComponent} from './components/login/login.component';
 import {ConfirmPopupComponent} from './components/confirm-popup/confirm-popup.component';
 import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import { AlertPopupComponent } from './components/alert-popup/alert-popup.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { AlertPopupComponent } from './components/alert-popup/alert-popup.compon
     LoginComponent,
     ConfirmPopupComponent,
     AdminHomeComponent,
-    AlertPopupComponent
+    AlertPopupComponent,
+    UserFormComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

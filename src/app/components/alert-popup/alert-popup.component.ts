@@ -18,10 +18,6 @@ export class AlertPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  scrollIssue() {
-    document.body.classList.add('confirm-popup--open');
-  }
-
   close() {
     this.popupAnswer.emit(false);
   }

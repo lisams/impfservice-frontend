@@ -1,0 +1,154 @@
+<main class="container">
+  <div class="row">
+    <div class="col-12 col-lg-4">
+      <div class="field p-4 p-lg-5 shadow-sm">
+        <div *ngIf="user" class="d-flex justify-content-between flex-column h-100">
+          <div class="mb-5-">
+            <h1 class="fw-bold text-center">{{user?.firstname}} {{user?.lastname}}</h1>
+            <p class="text-center">SVNR: {{user?.sv_nr}}</p>
+          </div>
+          <ng-container *ngIf="vaccination">
+            <div *ngIf="daysUntilVaccination > 0" class="mb-5 mt-5 mt-lg-0">
+              <span class="d-block text-center lh-1 mb-3 fs-bigger">Nur noch</span>
+              <h1 class="d-block text-center fw-bold tc-red my-0 lh-1 mb-3 fs-big">{{daysUntilVaccination}} Tage</h1>
+              <span class="d-block text-center lh-1 fs-bigger">bis zur Impfung!</span>
+            </div>
+            <div *ngIf="daysUntilVaccination <= 0 && user?.vaccinated" class="my-5">
+              <h1 class="d-block text-center fw-bold tc-red my-0 lh-1 mb-3 fs-big">Gratulation!</h1>
+              <span class="d-block text-center fs-bigger">Sie wurden bereits geimpft! Danke, dass du mithilfst Leben zu retten!</span>
+            </div>
+            <div *ngIf="daysUntilVaccination <= 0 && !user?.vaccinated" class="my-5">
+              <h1 class="d-block text-center fw-bold tc-red my-0 lh-1 mb-3 fs-big">Oh, nein!</h1>
+              <span class="d-block text-center fs-bigger">Scheinbar hast du deinen Impftermin verpasst!</span>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+              <button *ngIf="user?.vaccination_id" [routerLink]="['../impfungen', user?.vaccination_id]"
+                      class="me-0">
+                Details zur Impfung
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!vaccination">
+            <div class="mb-5">
+              <h1 class="d-block text-center fw-bold tc-red my-0 lh-1 mb-3 fs-big">Huch...</h1>
+              <span class="d-block text-center fs-bigger">Du bist noch nicht für eine Impfung angemeldet!</span>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+              <button [routerLink]="['../../impfungen']" class="me-0">
+                Jetzt anmelden
+              </button>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8">
+      <div class="field p-4 p-lg-5 shadow-sm">
+        <div *ngIf="user">
+          <div class="row mb-4">
+            <h2 class="fw-bold mb-4 col-12 col-md-8">Informationen zum Profil</h2>
+            <div class="col-12 col-md-4 d-flex justify-content-md-end">
+              <button (click)="logout()" class="me-0 button--secondary">Ausloggen</button>
+            </div>
+          </div>
+
+          <div class="vaccinationlist">
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">Name</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span>{{user?.firstname}} {{user?.lastname}}</span>
+              </div>
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">SVNR</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span>{{user?.sv_nr}}</span>
+              </div>
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center" *ngIf="vaccination">
+              <div class="col-5 col-md-3">
+                <label class="fw-bold">Impftermin</label>
+              </div>
+              <div class="col-7 col-md-9">
+                <span>{{vaccination.date | date: 'dd.MM.yyyy'}} ({{vaccination.start.toString().substring(0, vaccination.start.toString().length - 3)}} -
+                  {{vaccination.end.toString().substring(0, vaccination.end.toString().length - 3)}} Uhr)</span>
+              </div>
+
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <label class="fw-bold">Impfstatus</label>
+              </div>
+              <div class="col-7 col-md-9">
+                <!--<div class="">
+                  <label class="switch" *ngIf="adminIsLoggedIn()">
+                    <input type="checkbox" id="vaccinated" [checked]="user?.vaccinated" [(ngModel)]="user.vaccinated"
+                           (click)="openPopup($event)">
+                    <span class="slider round"></span>
+                  </label>
+                </div>-->
+                <div>
+                  <span *ngIf="user?.vaccinated"><i
+                    class="fas fa-check me-2 vaccinated__icon vaccinated__icon--true"></i>Erfolgreich geimpft</span>
+                  <span *ngIf="!user?.vaccinated"><i
+                    class="fas fa-times me-2 vaccinated__icon vaccinated__icon--false"></i>Noch nicht geimpft</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">Geburtsdatum</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span>{{user?.date_of_birth | date: 'dd.MM.yyyy'}}</span>
+              </div>
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">Addresse</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span>{{user?.address.street_address}}, {{user?.address.zip_code}} {{user?.address.city}}</span>
+              </div>
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">Telefonnummer</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span><a href="tel:{{user?.phone}}" class="tc-darkblue">{{user?.phone}}</a></span>
+              </div>
+            </div>
+            <div class="row vaccinationlist__item d-flex align-items-center">
+              <div class="col-5 col-md-3">
+                <span class="fw-bold">Email-Adresse</span>
+              </div>
+              <div class="col-7 col-md-9">
+                <span><a class="tc-darkblue" href="mailto:{{user?.email}}">{{user?.email}}</a></span>
+              </div>
+            </div>
+            <div class="d-xl-flex justify-content-between mt-5" *ngIf="isLoggedIn()">
+              <h3 class="mb-0 fw-bold">Bearbeitungsoptionen</h3>
+              <div class="mt-3 mt-xl-0">
+                <button class="button--secondary button--small">
+                  <i class="fas fa-edit pe-2"></i>Profil bearbeiten
+                </button>
+                <button class="button--secondary button--small">
+                  <i class="fas fa-trash-alt pe-2"></i>Profil löschen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--<app-confirm-popup *ngIf="adminIsLoggedIn()" [popup]="popupConfirmVaccinationStateChange" (popupAnswer)="getPopupAnswer($event)"></app-confirm-popup>-->

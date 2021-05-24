@@ -29,6 +29,13 @@ export class VaccinationDetailComponent implements OnInit {
     'Verpflichtend anmelden'
   );
 
+  popupConfirmCancelUser: Popup = new Popup(
+    'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    'Wenn Sie sich abmelden, verzichten Sie auf Ihren Impftermin und müssen sich für einen neues anmelden!',
+    'Verpflichtend abmelden'
+  );
+
+
   popupAlertUserNotLoggedIn: Popup = new Popup(
     'Du bist noch nicht eingeloggt!',
     'Um dich für eine Impfung anzumelden, musst du dich vorher einloggen. Möchtest du dich einloggen?',
@@ -81,6 +88,16 @@ export class VaccinationDetailComponent implements OnInit {
     }
   }
 
+  cancelUserForVaccination(answer) {
+    if(answer) {
+      this.us.cancelUserForVaccination(this.currentUser.sv_nr)
+        .subscribe(res => {
+          console.log(res);
+          this.router.navigate(['/user', this.currentUser.sv_nr]);
+        });
+    }
+  }
+
   openDeletePopup(e) {
     e.preventDefault();
     this.popupConfirmDeleteVaccination.isVisible = true;
@@ -103,6 +120,11 @@ export class VaccinationDetailComponent implements OnInit {
     this.popupConfirmRegisterUserForVaccination.isVisible = true;
   }
 
+  openCancelPopup(e) {
+    e.preventDefault();
+    this.popupConfirmCancelUser.isVisible = true;
+  }
+
   getDeletePopupAnswer(answer) {
     this.popupConfirmDeleteVaccination.isVisible = false;
     this.removeVaccination(answer);
@@ -111,6 +133,11 @@ export class VaccinationDetailComponent implements OnInit {
   getRegisterPopupAnswer(answer) {
     this.popupConfirmRegisterUserForVaccination.isVisible = false;
     this.registerUserForVaccination(answer);
+  }
+
+  getCancelPopupAnswer(answer) {
+    this.popupConfirmRegisterUserForVaccination.isVisible = false;
+    this.cancelUserForVaccination(answer);
   }
 
   closeAlertPopup(answer) {

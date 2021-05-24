@@ -36,24 +36,33 @@ export class AuthenticationService {
     const decodedToken = jwt_decode(token) as Token;
     console.log(decodedToken.user.id);
     sessionStorage.setItem('token', token);
-    sessionStorage.setItem('userId', decodedToken.user.id);
-    sessionStorage.setItem('svnr', decodedToken.user.svnr);
-    sessionStorage.setItem('admin', decodedToken.user.admin);
-    console.log(decodedToken);
+    // TODO user object anlegen
+    // sessionStorage.setItem('userId', decodedToken.user.id);
+    // sessionStorage.setItem('svnr', decodedToken.user.svnr);
+    // sessionStorage.setItem('admin', decodedToken.user.admin);
+    // console.log(decodedToken);
 
-    this.router.navigate(['/user', decodedToken.user.svnr]);
+    this.router.navigate(['/profil']);
   }
 
   public getCurrentUserId() {
+    // let user = new User()
     return Number.parseInt(sessionStorage.getItem('userId'));
   }
 
+  public getCurrentUser() {
+    // TODO return curr user
+  }
+
   public getCurrentUserSVNR() {
-    return sessionStorage.getItem('svnr');
+    let decodedToken = jwt_decode(sessionStorage.getItem('token')) as Token;
+    return decodedToken.user.svnr;
   }
 
   public getCurrentUserVaccinationStatus() {
-    return Boolean(sessionStorage.getItem('vaccinated'));
+    let decodedToken = jwt_decode(sessionStorage.getItem('token')) as Token;
+    // return decodedToken.user.;
+    // TODO
   }
 
   public logout() {
@@ -85,17 +94,22 @@ export class AuthenticationService {
   }
 
   public adminIsLoggedIn() {
-    if (sessionStorage.getItem('token') && sessionStorage.getItem('admin') === '1') {
+    if (sessionStorage.getItem('token')) {
       let token: string = sessionStorage.getItem('token');
       const decodedToken = jwt_decode(token) as Token;
+
       let expirationDate: Date = new Date(0);
+      let isAdmin : any = decodedToken.user.admin;
       expirationDate.setUTCSeconds(decodedToken.exp);
-      if (expirationDate < new Date()) {
-        console.log('token expired');
+
+      if (expirationDate > new Date() && isAdmin === 1) {
+        return true;
+      } else if (expirationDate < new Date()) {
         sessionStorage.removeItem('token');
         return false;
+      } else {
+        return false;
       }
-      return true;
     } else {
       return false;
     }

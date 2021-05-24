@@ -10,7 +10,10 @@
           <header class="d-block d-lg-flex justify-content-between">
             <h2 class="fw-bold">Impfung: {{vaccination?.location.title}}</h2>
             <button *ngIf="!vaccinationCompleted && (vaccination.max_participants-vaccination.users.length > 0)"
-                    (click)="openRegisterPopups($event)">Anmelden
+                    (click)="openRegisterPopups($event)" [disabled]="currentUser?.vaccination_id != null">Anmelden
+            </button>
+            <button *ngIf="currentUser?.vaccination_id === vaccination.id"
+                    (click)="openCancelPopup($event)">Abmelden
             </button>
           </header>
 
@@ -134,7 +137,12 @@
 
 <app-confirm-popup [popup]="popupConfirmDeleteVaccination"
                    (popupAnswer)="getDeletePopupAnswer($event)"></app-confirm-popup>
+
 <app-confirm-popup [popup]="popupConfirmRegisterUserForVaccination"
                    (popupAnswer)="getRegisterPopupAnswer($event)"></app-confirm-popup>
+
+<app-confirm-popup [popup]="popupConfirmCancelUser"
+                   (popupAnswer)="getCancelPopupAnswer($event)"></app-confirm-popup>
+
 <app-alert-popup [popup]="popupAlertUserNotLoggedIn" [link]="popupAlertUserNotLoggedInLink"
-(popupAnswer)="closeAlertPopup($event)"></app-alert-popup>
+                  (popupAnswer)="closeAlertPopup($event)"></app-alert-popup>

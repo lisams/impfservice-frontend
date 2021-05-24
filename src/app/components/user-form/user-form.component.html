@@ -1,0 +1,33 @@
+<main class="container">
+  <div class="w-100">
+    <div class="col-12 col-lg-12">
+      <div class="field p-4 p-lg-5 shadow-sm ">
+        <h2 class="fw-bold">Registrierung</h2>
+        <form>
+          <input type="hidden" name="id">
+          <div class="my-4">
+
+            <div class="row">
+              <div class="col-12 col-lg-6">
+                <div class="input-field">
+
+                  <input formControlName="firstname" type="text">
+                  <label>Vorname<span class="tc-red"> *</span></label>
+                  <!--<div *ngIf="errors.start" class="error-message"> {{ errors.start }} </div>-->
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="input-field">
+                  <input formControlName="lastname" type="text">
+                  <label>Nachname<span class="tc-red"> *</span></label>
+                  <!--<div *ngIf="errors.end" class="error-message"> {{ errors.end }} </div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

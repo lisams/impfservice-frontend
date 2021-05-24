@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginErrorMessages} from './login-error-messages';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -15,41 +15,42 @@ interface Response {
 })
 export class LoginComponent implements OnInit {
 
-  loginForm : FormGroup;
+  loginForm: FormGroup;
   errors: { [key: string]: string } = {};
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService : AuthenticationService,
-  ) { }
+    private authService: AuthenticationService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.pattern('')]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern("^(?=.*?[aA-zZ])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]]
     });
     this.updateErrorMessages();
   }
 
   updateErrorMessages() {
-    console.log("form invalid? " + this.loginForm.invalid);
+    this.loginForm.statusChanges.subscribe(() => {
+      console.log('form invalid? ' + this.loginForm.invalid);
 
-    this.errors = {};
+      this.errors = {};
 
-    for (const message of LoginErrorMessages) {
-      const control = this.loginForm.get(message.forControl);
+      for (const message of LoginErrorMessages) {
+        const control = this.loginForm.get(message.forControl);
 
-      if (
-        control && control.dirty &&
-        control.invalid && control.errors[message.forValidator] &&
-        !this.errors[message.forControl]
-      ) {
-        this.errors[message.forControl] = message.text;
+        if (
+          control && control.dirty &&
+          control.invalid && control.errors[message.forValidator] &&
+          !this.errors[message.forControl]
+        ) {
+          this.errors[message.forControl] = message.text;
+        }
       }
-
-    }
-
+    });
   }
 
   login() {
