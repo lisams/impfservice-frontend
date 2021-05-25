@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -17,6 +17,11 @@ import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import { AlertPopupComponent } from './components/alert-popup/alert-popup.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {VaccinationService} from './services/vaccination.service';
+import {AuthenticationService} from './services/authentication.service';
+import {TokenInterceptorService} from './services/token.interceptor';
+import {UserService} from './services/user.service';
+import {APP_BASE_HREF} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,11 @@ import { ProfileComponent } from './components/profile/profile.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{provide: APP_BASE_HREF, useValue: '/'}, VaccinationService, UserService, AuthenticationService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

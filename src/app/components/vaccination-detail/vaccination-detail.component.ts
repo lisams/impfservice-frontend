@@ -83,7 +83,7 @@ export class VaccinationDetailComponent implements OnInit {
       this.us.registerUserForVaccination(this.currentUser.sv_nr, this.vaccination.id)
         .subscribe(res => {
           console.log(res);
-          this.router.navigate(['/user', this.currentUser.sv_nr]);
+          this.router.navigate(['/profil']);
         });
     }
   }
@@ -93,7 +93,7 @@ export class VaccinationDetailComponent implements OnInit {
       this.us.cancelUserForVaccination(this.currentUser.sv_nr)
         .subscribe(res => {
           console.log(res);
-          this.router.navigate(['/user', this.currentUser.sv_nr]);
+          this.router.navigate(['/profil']);
         });
     }
   }
@@ -136,7 +136,7 @@ export class VaccinationDetailComponent implements OnInit {
   }
 
   getCancelPopupAnswer(answer) {
-    this.popupConfirmRegisterUserForVaccination.isVisible = false;
+    this.popupConfirmCancelUser.isVisible = false;
     this.cancelUserForVaccination(answer);
   }
 

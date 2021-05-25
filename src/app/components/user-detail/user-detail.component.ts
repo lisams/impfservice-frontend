@@ -9,8 +9,7 @@ import {Popup} from '../../shared/popup';
 
 @Component({
   selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.scss']
+  templateUrl: './user-detail.component.html'
 })
 export class UserDetailComponent implements OnInit {
 
@@ -82,10 +81,6 @@ export class UserDetailComponent implements OnInit {
 
   adminIsLoggedIn() {
     return this.authService.adminIsLoggedIn();
-  }
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn();
   }
 
   logout() {

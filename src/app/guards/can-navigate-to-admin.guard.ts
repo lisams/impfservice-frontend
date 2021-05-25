@@ -20,15 +20,10 @@ export class CanNavigateToAdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.adminIsLoggedIn()) {
       return true;
     } else {
-     // window.alert("Bitte einloggen für Admin Bereich");
-      // document.body.("<app-alert-popup></app-alert-popup>");
-
-      let popup = new Popup("test", "t", "r", true);
-      console.log(state);
-      this.router.navigate(["../alert", {popup: popup}])
+      this.router.navigate(["../login"])
       return false;
     }
   }

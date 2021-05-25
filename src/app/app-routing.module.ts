@@ -19,18 +19,17 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'impfungen', component: VaccinationListComponent },
   { path: 'impfungen/:id', component: VaccinationDetailComponent },
-  { path: 'user/:svnr', component: UserDetailComponent, canActivate:[CanNavigateToAdminGuard, CanNavigateToUserGuard] },
+  { path: 'user/:svnr', component: UserDetailComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'admin', component: AdminHomeComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'admin/impfung', component: VaccinationFormComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'admin/impfung/:id', component: VaccinationFormComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'registrierung', component: UserFormComponent },
-  { path: 'profil', component: ProfileComponent },
-  { path: 'alert', component: AlertPopupComponent }
+  { path: 'profil', component: ProfileComponent, canActivate:[CanNavigateToUserGuard] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true }) ],
   exports: [RouterModule],
   providers: [CanNavigateToAdminGuard, CanNavigateToUserGuard]
 })

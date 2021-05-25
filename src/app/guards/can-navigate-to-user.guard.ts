@@ -21,10 +21,7 @@ export class CanNavigateToUserGuard implements CanActivate {
     if (this.authService.isLoggedIn()) {
       return true;
     } else {
-      window.alert("Bitte einloggen für Admin Bereich");
-
-      console.log(state);
-      this.router.navigate(["../"], { relativeTo: this.route });
+      this.router.navigate(["../login"])
       return false;
     }
   }

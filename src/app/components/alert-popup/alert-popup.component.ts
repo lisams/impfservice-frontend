@@ -3,8 +3,7 @@ import {Popup} from '../../shared/popup';
 
 @Component({
   selector: 'app-alert-popup',
-  templateUrl: './alert-popup.component.html',
-  styleUrls: ['./alert-popup.component.scss']
+  templateUrl: './alert-popup.component.html'
 })
 export class AlertPopupComponent implements OnInit {
 

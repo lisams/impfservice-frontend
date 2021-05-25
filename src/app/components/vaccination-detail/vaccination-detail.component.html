@@ -9,12 +9,14 @@
         <div *ngIf="vaccination">
           <header class="d-block d-lg-flex justify-content-between">
             <h2 class="fw-bold">Impfung: {{vaccination?.location.title}}</h2>
-            <button *ngIf="!vaccinationCompleted && (vaccination.max_participants-vaccination.users.length > 0)"
-                    (click)="openRegisterPopups($event)" [disabled]="currentUser?.vaccination_id != null">Anmelden
-            </button>
-            <button *ngIf="currentUser?.vaccination_id === vaccination.id"
-                    (click)="openCancelPopup($event)">Abmelden
-            </button>
+            <div>
+              <button *ngIf="!vaccinationCompleted && (vaccination.max_participants-vaccination.users.length > 0)"
+                      (click)="openRegisterPopups($event)" [disabled]="currentUser?.vaccination_id != null">Anmelden
+              </button>
+              <button *ngIf="currentUser?.vaccination_id === vaccination.id"
+                      (click)="openCancelPopup($event)">Abmelden
+              </button>
+            </div>
           </header>
 
           <div class="row">

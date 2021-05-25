@@ -3,8 +3,7 @@ import {Popup} from '../../shared/popup';
 
 @Component({
   selector: 'app-confirm-popup',
-  templateUrl: './confirm-popup.component.html',
-  styleUrls: ['./confirm-popup.component.scss']
+  templateUrl: './confirm-popup.component.html'
 })
 export class ConfirmPopupComponent implements OnInit {
 
